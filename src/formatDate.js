@@ -12,8 +12,21 @@ function formatDate(date, fromFormat, toFormat) {
   let year = '';
   let month = '';
   let day = '';
-  const spliter = fromFormat[fromFormat.length - 1];
-  const joiner = toFormat[toFormat.length - 1];
+  let spliter = '';
+  let joiner = '';
+
+  for (const type of fromFormat) {
+    if (type.length === 1) {
+      spliter = type;
+    }
+  }
+
+  for (const type of toFormat) {
+    if (type.length === 1) {
+      joiner = type;
+    }
+  }
+
   const numbers = date.split(spliter);
 
   for (let i = 0; i < fromFormat.length; i++) {
@@ -39,7 +52,7 @@ function formatDate(date, fromFormat, toFormat) {
   for (const type of toFormat) {
     switch (type) {
       case 'YYYY':
-        if (type.length > year.length) {
+        if (year.length === 2) {
           if (year < 30) {
             year = '20' + year;
           } else {
@@ -50,7 +63,7 @@ function formatDate(date, fromFormat, toFormat) {
         break;
 
       case 'YY':
-        if (type.length < year.length) {
+        if (year.length === 4) {
           year = year.slice(2);
         }
         result.push(year);
